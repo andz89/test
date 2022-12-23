@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <p class="element"></p>
+    <div class="parent">
+
+    </div>
+    <script>
+        //  new Date().toLocaleString()
+        let element = document.querySelector('.element')
+
+
+        window.addEventListener("paste", function (e) {
+            e.preventDefault();
+            var text = e.clipboardData.getData("text/plain");
+            let a = text.split(/\r?\n/);
+            let parent = document.querySelector(".parent")
+            a.forEach(element => {
+
+                let c = document.createElement("div")
+                c.innerText = element
+                c.innerText.replace(/\s+/g, ' ').trim()
+                parent.append(c)
+
+                document.querySelector(
+                    'textarea'
+                ).value = parent.innerText
+
+            });
+
+
+
+        });
+
+    </script>
+</body>
+
+</html>
