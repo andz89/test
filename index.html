@@ -14,14 +14,26 @@
     <div class="parent">
 
     </div>
+    <img id="one" src="loayon_1.jpg" width="300" alt="">
+    <img id="two" src="loayon_2.jpg" width="300" alt="">
+    <img id="three" src="loayon_3.jpg" width="300" alt="">
+
+
+    <script src="jszip.js"></script>
+    <script src="jszip-utils.min.js"></script>
+    <script src="filesaver.js"></script>
+
     <script>
+
         //  new Date().toLocaleString()
         let element = document.querySelector('.element')
 
 
         window.addEventListener("paste", function (e) {
+
             e.preventDefault();
             var text = e.clipboardData.getData("text/plain");
+            console.log(e.clipboardData.getData('text/html'));
             let a = text.split(/\r?\n/);
             let parent = document.querySelector(".parent")
             a.forEach(element => {
@@ -37,10 +49,49 @@
 
             });
 
-
+            let element = document.querySelector(".element")
+            element.innerHTML = e.clipboardData.getData('text/html')
 
         });
 
+        var zip = new JSZip();
+        var count = 0;
+        var zipFilename = "zipFilename.zip";
+        let one = document.querySelector('#one').src
+        let two = document.querySelector('#two').src
+        let three = document.querySelector('#three').src
+
+        document.querySelector('#three').scr
+        var urls = [
+            one,
+            two,
+            three
+        ];
+
+        urls.forEach(function (url) {
+            var filename = "filename";
+            // loading a file and add it in a zip file
+            JSZipUtils.getBinaryContent(url, function (err, data) {
+                if (err) {
+                    throw err; // or handle the error
+                }
+                var img = zip.folder("images");
+                img.file(filename + '_' + count + ".png", data, { binary: true });
+                count++;
+                if (count == urls.length) {
+                    zip.generateAsync({ type: 'blob' }).then(function (content) {
+                        // const a = document.createElement("a");
+                        // a.href = URL.createObjectURL(content);
+
+                        // document.body.appendChild(a);
+                        // a.download = "example.zip";
+                        // a.click();
+                        // document.body.removeChild(a);
+                        saveAs(content, "zipFilename");
+                    });
+                }
+            });
+        });
     </script>
 </body>
 
