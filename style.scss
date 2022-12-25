@@ -1,0 +1,132 @@
+
+.list-name-container{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+ 
+ 
+    background-color: rgba(0, 0, 0, 0.349);
+
+    .modal-content {
+
+       
+        padding: 40px 0;
+  
+            display: flex;
+        margin: auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    
+        .list-names-content{
+            background-color: rgb(255, 255, 255);
+            padding: 20px 20px;
+          width: 590px;
+          
+     
+            .list_names{
+    
+              overflow-y: auto;
+              top: 0;    
+              height:400px;
+              margin-top: 5px;
+                flex-direction: column;
+         
+                display: flex;
+                justify-content: flex-start;
+             
+                    input{
+                        width: 250px;
+                        margin: 1px 0;
+                        padding: 0;
+                        gap: 0;
+                        border: none;
+                        height: 40px;
+
+                    
+                    }
+                    input:focus{
+                        border: none;
+                 
+                        padding: 0;
+                        gap: 0;
+                        outline-width: .5px;
+                        outline-color: rgb(202, 200, 200);
+                    }   
+                  span{
+                    margin: 0 10px;
+                  }
+            }
+            .textarea-container{
+        
+               display: flex;
+               justify-content: center;;
+          
+            
+                textarea{
+                    width: 100%;
+                    height: 30px;
+                    margin: 0;
+                    padding: 10px;
+                
+                  border-radius: 5px;
+                    resize: none;
+                }
+                textarea:focus{
+             
+               
+                  padding: 10px;
+
+      
+                  outline-width: .5px;
+                  outline-color: rgb(202, 200, 200);
+                }
+            }
+        }
+    
+       
+      }
+  
+      
+
+  .modal-header h2,
+  .modal-footer h3 {
+    margin: 0;
+  }
+  
+  .modal-header {
+    background: var(--modal-color);
+    padding: 15px;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+
+  
+  .modal-footer {
+
+    padding: 10px;
+   
+  }
+  
+  .close {
+    color: #ccc;
+    float: right;
+    font-size: 30px;
+    color: #fff;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  }
+  

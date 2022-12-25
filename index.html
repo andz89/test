@@ -5,19 +5,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/style/style.min.css">
     <title>Document</title>
 </head>
 
 <body>
-    <textarea name="" id="" cols="30" rows="10"></textarea>
-    <p class="element"></p>
-    <div class="parent">
+    <button id="zip-download">download as zip</button>
+
+    <textarea name="" id=""></textarea>
+    <span class="excel-html" style="display: none;"></span>
+    <div class="list-name-container">
+        <div class="modal-content">
+            <div class="list-names-content">
+                <div class="textarea-container">
+                    <textarea name="" id="" cols="30" rows="10" placeholder="paste here to add names"></textarea>
+
+                </div>
+
+                <div class="list_names">
+
+                </div>
+                <div class="modal-footer">
+                    <h3>Modal Footer</h3>
+                </div>
+            </div>
+
+
+        </div>
 
     </div>
     <img id="one" src="loayon_1.jpg" width="300" alt="">
     <img id="two" src="loayon_2.jpg" width="300" alt="">
     <img id="three" src="loayon_3.jpg" width="300" alt="">
-
 
     <script src="jszip.js"></script>
     <script src="jszip-utils.min.js"></script>
@@ -26,72 +45,126 @@
     <script>
 
         //  new Date().toLocaleString()
-        let element = document.querySelector('.element')
-
-
+        let element = document.querySelector('.excel-html')
         window.addEventListener("paste", function (e) {
 
             e.preventDefault();
-            var text = e.clipboardData.getData("text/plain");
-            console.log(e.clipboardData.getData('text/html'));
-            let a = text.split(/\r?\n/);
-            let parent = document.querySelector(".parent")
-            a.forEach(element => {
 
-                let c = document.createElement("div")
-                c.innerText = element
-                c.innerText.replace(/\s+/g, ' ').trim()
-                parent.append(c)
+            let parent = document.querySelector(".list-name-container")
+            let list_names = document.querySelector('.list_names')
+            parent.style.display = "block"
 
-                document.querySelector(
-                    'textarea'
-                ).value = parent.innerText
 
-            });
-
-            let element = document.querySelector(".element")
             element.innerHTML = e.clipboardData.getData('text/html')
 
-        });
+            let aa = document.querySelectorAll("table tr")
 
-        var zip = new JSZip();
-        var count = 0;
-        var zipFilename = "zipFilename.zip";
-        let one = document.querySelector('#one').src
-        let two = document.querySelector('#two').src
-        let three = document.querySelector('#three').src
 
-        document.querySelector('#three').scr
-        var urls = [
-            one,
-            two,
-            three
-        ];
+            aa.forEach(element => {
+                if (element.children.length > 1) {
+                    let a = element.children[0].innerText
+                    let b = element.children[1].innerText
 
-        urls.forEach(function (url) {
-            var filename = "filename";
-            // loading a file and add it in a zip file
-            JSZipUtils.getBinaryContent(url, function (err, data) {
-                if (err) {
-                    throw err; // or handle the error
+                    let div = document.createElement("div")
+
+                    div.innerHTML = `
+                    
+                    <input type="text" value="  ${a} ">
+                    <input type="text" value="  ${b} ">
+                    <span>Delete</span>
+                    `
+                    list_names.appendChild(div)
+
+                } else {
+                    let a = element.children[0].innerText
+                    let b = ' '
+
+                    let div = document.createElement("div")
+
+                    div.innerHTML = `
+                    
+    <input type="text" value="  ${a} ">
+    <input type="text" value="  ${b} ">
+
+                  
+  
+                `
+
+                    list_names.appendChild(div)
                 }
-                var img = zip.folder("images");
-                img.file(filename + '_' + count + ".png", data, { binary: true });
-                count++;
-                if (count == urls.length) {
-                    zip.generateAsync({ type: 'blob' }).then(function (content) {
-                        // const a = document.createElement("a");
-                        // a.href = URL.createObjectURL(content);
 
-                        // document.body.appendChild(a);
-                        // a.download = "example.zip";
-                        // a.click();
-                        // document.body.removeChild(a);
-                        saveAs(content, "zipFilename");
-                    });
-                }
+
+
+
+
+
+
             });
+
+            // console.log(arr);
+
         });
+
+        // var text = e.clipboardData.getData("text/plain");
+        // console.log(e.clipboardData.getData('text/html'));
+        // let a = text.split(/\r?\n/);
+        // let parent = document.querySelector(".parent")
+        // a.forEach(element => {
+
+        //     let c = document.createElement("div")
+        //     c.innerText = element
+        //     c.innerText.replace(/\s+/g, ' ').trim()
+        //     parent.append(c)
+
+        //     document.querySelector(
+        //         'textarea'
+        //     ).value = parent.innerText
+
+        // });
+        document.querySelector('#zip-download').addEventListener('click', function () {
+            downloadZip()
+        })
+        function downloadZip() {
+            var zip = new JSZip();
+            var count = 0;
+            var zipFilename = "zipFilename.zip";
+            let one = document.querySelector('#one').src
+            let two = document.querySelector('#two').src
+            let three = document.querySelector('#three').src
+
+            document.querySelector('#three').scr
+            var urls = [
+                one,
+                two,
+                three
+            ];
+
+            urls.forEach(function (url) {
+                var filename = "filename";
+                // loading a file and add it in a zip file
+                JSZipUtils.getBinaryContent(url, function (err, data) {
+                    if (err) {
+                        throw err; // or handle the error
+                    }
+                    var img = zip.folder("images");
+                    img.file(filename + '_' + count + ".png", data, { binary: true });
+                    count++;
+                    if (count == urls.length) {
+                        zip.generateAsync({ type: 'blob' }).then(function (content) {
+                            const a = document.createElement("a");
+                            a.href = URL.createObjectURL(content);
+                            console.log(a);
+                            document.body.appendChild(a);
+                            a.download = zipFilename;
+                            a.click();
+                            // document.body.removeChild(a);
+                            // saveAs(content, "zipFilename");
+                        });
+                    }
+                });
+            });
+        }
+
     </script>
 </body>
 
